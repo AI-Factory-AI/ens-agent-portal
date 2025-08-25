@@ -31,7 +31,7 @@ const Navigation = () => {
           <div className="flex items-center space-x-4">
             <Link to="/onboarding">
               <Button variant="hero" size="sm">
-                Create Agent
+                Activate Agent
               </Button>
             </Link>
             <Button variant="ghost" size="icon" className="md:hidden">

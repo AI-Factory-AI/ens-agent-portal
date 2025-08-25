@@ -1,24 +1,51 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { CheckCircle, Wallet, Bot, Users, Globe, DollarSign, Shield, ArrowRight } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { CheckCircle, Wallet, Bot, Users, Globe, DollarSign, Shield, ArrowRight, ArrowLeft } from "lucide-react";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 const OnboardingFlow = () => {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const [currentStep, setCurrentStep] = useState(1);
   const [selectedRole, setSelectedRole] = useState("");
   const [ensName, setEnsName] = useState("");
 
+  // Get agent info from URL if activating a specific agent
+  const agentName = searchParams.get('agent');
+  const agentEns = searchParams.get('ens');
+  const agentRole = searchParams.get('role');
+
+  // Customize onboarding based on agent being activated
+  const isActivatingAgent = Boolean(agentName && agentEns && agentRole);
+
   const steps = [
     { id: 1, title: "Connect Wallet", description: "Connect your Web3 wallet" },
     { id: 2, title: "Choose ENS Name", description: "Select your agent's ENS subname" },
-    { id: 3, title: "Select Role", description: "Choose your agent's specialty" },
+    { id: 3, title: "Select Agent", description: "Choose which agent to activate" },
     { id: 4, title: "Configure", description: "Set up your agent preferences" },
     { id: 5, title: "Deploy", description: "Launch your AI agent" },
   ];
+
+  // Check if this is a general activation (from header/hero buttons) or specific agent activation
+  const isGeneralActivation = !agentName && !agentEns && !agentRole;
+  const isSpecificAgentActivation = Boolean(agentName && agentEns && agentRole);
+
+  // Pre-select role if activating specific agent
+  useEffect(() => {
+    if (agentRole && !isGeneralActivation) {
+      // Map the agent role to the internal role ID
+      const roleMapping: { [key: string]: string } = {
+        "Payment Agent": "payment",
+        "Identity Agent": "identity", 
+        "Community Agent": "community",
+        "AI Assistant": "ai"
+      };
+      setSelectedRole(roleMapping[agentRole] || "ai");
+    }
+  }, [agentRole, isGeneralActivation]);
 
   const agentRoles = [
     {
@@ -131,8 +158,8 @@ const OnboardingFlow = () => {
         return (
           <div className="w-full max-w-4xl mx-auto">
             <div className="text-center mb-8">
-              <h2 className="text-2xl font-bold mb-2">Select Agent Role</h2>
-              <p className="text-muted-foreground">Choose your agent's primary specialty and capabilities.</p>
+              <h2 className="text-2xl font-bold mb-2">Select Agent to Activate</h2>
+              <p className="text-muted-foreground">Choose which type of agent you want to activate and use.</p>
             </div>
             <div className="grid md:grid-cols-2 gap-6">
               {agentRoles.map((role) => {
@@ -199,7 +226,7 @@ const OnboardingFlow = () => {
                     <Input type="number" placeholder="100" />
                   </div>
                   <div className="space-y-2">
-                    <label className="text-sm font-medium">Daily Limit ($)</label>
+                    <label className="font-medium">Daily Limit ($)</label>
                     <Input type="number" placeholder="1000" />
                   </div>
                 </div>
@@ -257,7 +284,7 @@ const OnboardingFlow = () => {
                 className="w-full" 
                 variant="outline" 
                 size="lg" 
-                onClick={() => navigate('/chat')}
+                onClick={() => navigate(`/?activated=${encodeURIComponent(agentRoles.find(r => r.id === selectedRole)?.title || '')}&ens=${encodeURIComponent(ensName + '.agent.eth')}&role=${encodeURIComponent(agentRoles.find(r => r.id === selectedRole)?.title || '')}`)}
               >
                 Go to Dashboard
                 <ArrowRight className="w-4 h-4 ml-2" />
@@ -277,26 +304,32 @@ const OnboardingFlow = () => {
         {/* Progress Steps */}
         <div className="flex justify-center mb-12">
           <div className="flex items-center space-x-4">
-            {steps.map((step, index) => (
-              <div key={step.id} className="flex items-center">
-                <div className={`flex items-center justify-center w-10 h-10 rounded-full border-2 transition-colors ${
-                  currentStep >= step.id 
-                    ? 'bg-primary border-primary text-primary-foreground' 
-                    : 'border-muted-foreground text-muted-foreground'
-                }`}>
-                  {currentStep > step.id ? (
-                    <CheckCircle className="w-5 h-5" />
-                  ) : (
-                    <span className="text-sm font-medium">{step.id}</span>
+            {steps
+              .filter(step => {
+                // Skip agent selection step for specific agent activation
+                if (step.id === 3 && isSpecificAgentActivation) return false;
+                return true;
+              })
+              .map((step, index, filteredSteps) => (
+                <div key={step.id} className="flex items-center">
+                  <div className={`flex items-center justify-center w-10 h-10 rounded-full border-2 transition-colors ${
+                    currentStep >= step.id 
+                      ? 'bg-primary border-primary text-primary-foreground' 
+                      : 'border-muted-foreground text-muted-foreground'
+                  }`}>
+                    {currentStep > step.id ? (
+                      <CheckCircle className="w-5 h-5" />
+                    ) : (
+                      <span className="text-sm font-medium">{step.id}</span>
+                    )}
+                  </div>
+                  {index < filteredSteps.length - 1 && (
+                    <div className={`w-12 h-0.5 mx-2 ${
+                      currentStep > step.id ? 'bg-primary' : 'bg-muted-foreground'
+                    }`} />
                   )}
                 </div>
-                {index < steps.length - 1 && (
-                  <div className={`w-12 h-0.5 mx-2 ${
-                    currentStep > step.id ? 'bg-primary' : 'bg-muted-foreground'
-                  }`} />
-                )}
-              </div>
-            ))}
+              ))}
           </div>
         </div>
 
@@ -316,7 +349,10 @@ const OnboardingFlow = () => {
             <Button 
               variant="ens" 
               onClick={nextStep}
-              disabled={currentStep === 2 && !ensName || currentStep === 3 && !selectedRole}
+              disabled={
+                (currentStep === 2 && !ensName) || 
+                (currentStep === 3 && !selectedRole && isGeneralActivation)
+              }
             >
               {currentStep === steps.length - 1 ? 'Deploy' : 'Next'}
             </Button>

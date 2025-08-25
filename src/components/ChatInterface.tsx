@@ -3,8 +3,9 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
+import { useSearchParams } from "react-router-dom";
 
-import { Send, Bot, User, ExternalLink, CheckCircle, Search, Plus, Bell, ShoppingCart, Settings, Sun, Moon, Paperclip, Mic, FileText, ChevronDown, Menu, MoreHorizontal, PanelLeftClose, PanelLeftOpen } from "lucide-react";
+import { Send, Bot, User, ExternalLink, CheckCircle, Search, Plus, Bell, ShoppingCart, Settings, Sun, Moon, Paperclip, Mic, FileText, ChevronDown, Menu, MoreHorizontal, PanelLeftClose, PanelLeftOpen, ArrowLeft } from "lucide-react";
 import Transactions from "./pages/Transactions";
 import Identity from "./pages/Identity";
 import NewAgent from "./pages/NewAgent";
@@ -24,7 +25,6 @@ interface ChatMessage {
   }[];
 }
 
-
 interface RecentActivity {
   id: string;
   title: string;
@@ -34,48 +34,12 @@ interface RecentActivity {
 }
 
 const ChatInterface = () => {
-  const [messages, setMessages] = useState<ChatMessage[]>([
-    {
-      id: '1',
-              content: "Hello! I'm your Flow AI Agent. I can help you with payments, identity management, and blockchain interactions. What would you like to do?",
-      sender: 'ai',
-      timestamp: new Date(Date.now() - 5 * 60 * 1000),
-    },
-    {
-      id: '2',
-      content: "Send 5 USDC to kwame.agent.eth",
-      sender: 'user',
-      timestamp: new Date(Date.now() - 4 * 60 * 1000),
-    },
-    {
-      id: '3',
-      content: "I'll send 5 USDC to kwame.agent.eth for you. Checking balances and initiating transaction...",
-      sender: 'ai',
-      timestamp: new Date(Date.now() - 3 * 60 * 1000),
-      actions: [
-        {
-          type: 'transaction',
-          description: 'Send 5 USDC to kwame.agent.eth',
-          txHash: '0x742d35Cc6548Bb1067b3B0a1e0e2c7B5d3e8F9c4',
-          status: 'completed'
-        }
-      ]
-    },
-    {
-      id: '4',
-      content: "What credentials does Ama have?",
-      sender: 'user',
-      timestamp: new Date(Date.now() - 2 * 60 * 1000),
-    },
-    {
-      id: '5',
-              content: "Based on ama.agent.eth's Flow records, she has the following verified credentials: Verified Vendor badge from Ghana DAO, Trusted Farmer certification from Agriculture Alliance, and a 5-star community rating with 78 reviews.",
-      sender: 'ai',
-      timestamp: new Date(Date.now() - 1 * 60 * 1000),
-    }
-  ]);
+  const [searchParams] = useSearchParams();
+  const agentName = searchParams.get('agent');
+  const agentEns = searchParams.get('ens');
+  const agentRole = searchParams.get('role');
 
-
+  const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [recentActivities] = useState<RecentActivity[]>([
     {
       id: '1',
@@ -93,26 +57,70 @@ const ChatInterface = () => {
     },
     {
       id: '3',
-              title: 'Flow record update',
+      title: 'Flow record update',
       description: 'Updated payment preferences',
       type: 'transaction',
       timestamp: new Date(Date.now() - 1 * 60 * 1000),
     },
-    {
-      id: '4',
-      title: 'Savings group join',
-      description: 'Joined Ghana DAO savings pool',
-      type: 'transaction',
-      timestamp: new Date(Date.now() - 30 * 60 * 1000),
-    },
-    {
-      id: '5',
-      title: 'Identity verification',
-      description: 'Completed KYC verification',
-      type: 'credential',
-      timestamp: new Date(Date.now() - 2 * 60 * 60 * 1000),
-    }
   ]);
+
+  // Initialize messages based on whether we're chatting with a specific agent
+  useEffect(() => {
+    if (agentName && agentEns && agentRole) {
+      // Agent-specific conversation
+      setMessages([
+        {
+          id: '1',
+          content: `Hello! I'm ${agentName} (${agentEns}). I'm your ${agentRole.toLowerCase()} and I'm here to help you with specialized services. How can I assist you today?`,
+          sender: 'ai',
+          timestamp: new Date(),
+        }
+      ]);
+    } else {
+      // Default Flow AI Agent conversation
+      setMessages([
+        {
+          id: '1',
+          content: "Hello! I'm your Flow AI Agent. I can help you with payments, identity management, and blockchain interactions. What would you like to do?",
+          sender: 'ai',
+          timestamp: new Date(Date.now() - 5 * 60 * 1000),
+        },
+        {
+          id: '2',
+          content: "Send 5 USDC to kwame.agent.eth",
+          sender: 'user',
+          timestamp: new Date(Date.now() - 4 * 60 * 1000),
+        },
+        {
+          id: '3',
+          content: "I'll send 5 USDC to kwame.agent.eth for you. Checking balances and initiating transaction...",
+          sender: 'ai',
+          timestamp: new Date(Date.now() - 3 * 60 * 1000),
+          actions: [
+            {
+              type: 'transaction',
+              description: 'Send 5 USDC to kwame.agent.eth',
+              txHash: '0x742d35Cc6548Bb1067b3B0a1e0e2c7B5d3e8F9c4',
+              status: 'completed'
+            }
+          ]
+        },
+        {
+          id: '4',
+          content: "What credentials does Ama have?",
+          sender: 'user',
+          timestamp: new Date(Date.now() - 2 * 60 * 1000),
+        },
+        {
+          id: '5',
+          content: "Based on ama.agent.eth's Flow records, she has the following verified credentials: Verified Vendor badge from Ghana DAO, Trusted Farmer certification from Agriculture Alliance, and a 5-star community rating with 78 reviews.",
+          sender: 'ai',
+          timestamp: new Date(Date.now() - 1 * 60 * 1000),
+        }
+      ]);
+    }
+  }, [agentName, agentEns, agentRole]);
+
 
   const [newMessage, setNewMessage] = useState("");
 
@@ -335,15 +343,19 @@ const ChatInterface = () => {
           <div className="border-b border-border px-4 py-4 bg-card">
             <div className="flex items-center pb-2 space-x-3">
               <div className="flex-1">
-                <h3 className="font-semibold">AI Agent</h3>
+                <h3 className="font-semibold">
+                  {agentName || "AI Agent"}
+                </h3>
+                {agentEns && (
+                  <p className="text-sm text-muted-foreground font-mono">{agentEns}</p>
+                )}
+              </div>
+              <Badge variant="outline" className="border-primary text-primary">
+                <Bot className="w-3 h-3 mr-1" />
+                {agentRole || "AI Agent"}
+              </Badge>
+            </div>
           </div>
-          <Badge variant="outline" className="border-primary text-primary">
-            <Bot className="w-3 h-3 mr-1" />
-            AI Agent
-          </Badge>
-        </div>
-      </div>
-
         )}
 
         {/* Page Content */}

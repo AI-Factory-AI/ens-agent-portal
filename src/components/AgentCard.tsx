@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Star, MessageCircle, Wallet, Shield } from "lucide-react";
+import { Star, MessageCircle, Wallet, Shield, Bot, Users, Globe } from "lucide-react";
 
 interface AgentCardProps {
   name: string;
@@ -13,6 +13,8 @@ interface AgentCardProps {
   isOnline: boolean;
   avatar?: string;
   description?: string;
+  onChatClick: (agent: any) => void;
+  onPayClick: (agent: any) => void;
 }
 
 const AgentCard = ({
@@ -24,10 +26,49 @@ const AgentCard = ({
   badges,
   isOnline,
   avatar,
-  description
+  description,
+  onChatClick,
+  onPayClick
 }: AgentCardProps) => {
+  // Get role-specific icon and primary action
+  const getRoleIcon = (role: string) => {
+    switch (role) {
+      case "Payment Agent": return Wallet;
+      case "AI Assistant": return Bot;
+      case "Identity Agent": return Users;
+      case "Community Agent": return Globe;
+      default: return Shield;
+    }
+  };
+
+  const getPrimaryAction = (role: string) => {
+    // All agents need activation before use
+    return "Activate";
+  };
+
+  const getActivationIcon = (role: string) => {
+    // Use a key or lock icon to indicate activation is required
+    return Shield;
+  };
+
+  const RoleIcon = getRoleIcon(role);
+  const primaryAction = getPrimaryAction(role);
+
+  // Create agent object to pass to parent
+  const agentData = {
+    name,
+    ensName,
+    role,
+    rating,
+    reviews,
+    badges,
+    isOnline,
+    avatar,
+    description
+  };
+
   return (
-    <div className="agent-card group">
+    <div className="agent-card group bg-card border rounded-lg p-6 h-full flex flex-col">
       {/* Agent Header */}
       <div className="flex items-start justify-between mb-4">
         <div className="flex items-center space-x-3">
@@ -50,7 +91,8 @@ const AgentCard = ({
 
       {/* Role and Rating */}
       <div className="flex items-center justify-between mb-3">
-        <Badge variant="secondary" className="rounded-full">
+        <Badge variant="secondary" className="rounded-full flex items-center gap-1">
+          <RoleIcon className="w-3 h-3" />
           {role}
         </Badge>
         <div className="flex items-center space-x-1">
@@ -62,7 +104,7 @@ const AgentCard = ({
 
       {/* Description */}
       {description && (
-        <p className="text-sm text-muted-foreground mb-4 line-clamp-2">
+        <p className="text-sm text-muted-foreground mb-4 line-clamp-2 flex-grow">
           {description}
         </p>
       )}
@@ -83,13 +125,23 @@ const AgentCard = ({
 
       {/* Action Buttons */}
       <div className="flex space-x-2 mt-auto">
-        <Button variant="outline" size="sm" className="flex-1">
+        <Button 
+          variant="outline" 
+          size="sm" 
+          className="flex-1"
+          onClick={() => onChatClick(agentData)}
+        >
           <MessageCircle className="w-4 h-4 mr-1" />
           Chat
         </Button>
-        <Button variant="ens" size="sm" className="flex-1">
-          <Wallet className="w-4 h-4 mr-1" />
-          Pay
+        <Button 
+          variant="ens" 
+          size="sm" 
+          className="flex-1"
+          onClick={() => onPayClick(agentData)}
+        >
+          <Shield className="w-4 h-4 mr-1" />
+          Activate
         </Button>
       </div>
     </div>

@@ -47,7 +47,7 @@ const HeroSection = () => {
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link to="/onboarding">
                 <Button variant="hero" size="lg" className="text-lg px-8 py-4">
-                  Create My Agent
+                  Activate My Agent
                   <ArrowRight className="w-5 h-5 ml-2" />
                 </Button>
               </Link>
