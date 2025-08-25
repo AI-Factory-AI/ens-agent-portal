@@ -130,24 +130,7 @@ const AgentsDirectory = () => {
           </p>
         </div>
 
-        {/* Activated Agent Display */}
-        {isAgentActivated && (
-          <div className="max-w-4xl mx-auto mb-8">
-            <div className="bg-card border rounded-lg p-6 text-center">
-              <div className="flex items-center justify-center space-x-4 mb-4">
-                <Badge variant="default" className="text-sm">
-                  <Bot className="w-3 h-3 mr-1" />
-                  Agent Activated
-                </Badge>
-              </div>
-              <h3 className="text-2xl font-bold mb-2">{activatedAgent}</h3>
-              <p className="text-muted-foreground font-mono mb-2">{activatedEns}</p>
-              <p className="text-sm text-muted-foreground">
-                Your {activatedRole?.toLowerCase()} is now active and ready to use!
-              </p>
-            </div>
-          </div>
-        )}
+
 
         {/* Agent Activation Banner */}
         {isInOnboarding && (
