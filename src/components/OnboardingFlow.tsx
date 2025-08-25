@@ -3,9 +3,11 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { CheckCircle, Wallet, Bot, Users, Globe, DollarSign, Shield } from "lucide-react";
+import { CheckCircle, Wallet, Bot, Users, Globe, DollarSign, Shield, ArrowRight } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const OnboardingFlow = () => {
+  const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(1);
   const [selectedRole, setSelectedRole] = useState("");
   const [ensName, setEnsName] = useState("");
@@ -248,8 +250,17 @@ const OnboardingFlow = () => {
                   <span className="text-sm">~$5.23</span>
                 </div>
               </div>
-              <Button className="w-full" variant="hero" size="lg">
+              <Button className="w-full" variant="hero" size="lg" onClick={() => navigate('/chat')}>
                 Deploy Agent
+              </Button>
+              <Button 
+                className="w-full" 
+                variant="outline" 
+                size="lg" 
+                onClick={() => navigate('/chat')}
+              >
+                Go to Dashboard
+                <ArrowRight className="w-4 h-4 ml-2" />
               </Button>
             </CardContent>
           </Card>

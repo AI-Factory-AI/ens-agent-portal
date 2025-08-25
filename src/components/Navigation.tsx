@@ -11,9 +11,9 @@ const Navigation = () => {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-2">
-            <div className="w-8 h-8 rounded-full gradient-ens animate-float"></div>
+            <div className="w-8 h-8 rounded-full gradient-ens"></div>
             <span className="text-xl font-bold bg-gradient-to-r from-primary to-primary-glow bg-clip-text text-transparent">
-              ENS Agents
+              Flow
             </span>
           </Link>
 
@@ -25,17 +25,10 @@ const Navigation = () => {
             <a href="/#how-it-works" className="text-muted-foreground hover:text-foreground transition-smooth">
               How It Works
             </a>
-            <Link to="/chat" className={`transition-smooth ${location.pathname === '/chat' ? 'text-primary font-medium' : 'text-muted-foreground hover:text-foreground'}`}>
-              Dashboard
-            </Link>
           </div>
 
           {/* CTA Buttons */}
           <div className="flex items-center space-x-4">
-            <Button variant="outline" size="sm" className="hidden sm:flex">
-              <Wallet className="w-4 h-4 mr-2" />
-              Connect Wallet
-            </Button>
             <Link to="/onboarding">
               <Button variant="hero" size="sm">
                 Create Agent

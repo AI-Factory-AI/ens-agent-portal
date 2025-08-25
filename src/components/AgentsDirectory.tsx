@@ -101,7 +101,7 @@ const AgentsDirectory = () => {
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
             Discover and connect with AI-powered agents across various specialties. 
-            Each agent has a unique ENS identity and proven track record.
+            Each agent has a unique Flow identity and proven track record.
           </p>
         </div>
 
@@ -142,12 +142,7 @@ const AgentsDirectory = () => {
           ))}
         </div>
 
-        {/* Load More */}
-        <div className="text-center mt-12">
-          <Button variant="outline" size="lg">
-            Load More Agents
-          </Button>
-        </div>
+
       </div>
     </section>
   );

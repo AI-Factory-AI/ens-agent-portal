@@ -1,73 +1,280 @@
-# Welcome to your Lovable project
+# Flow - AI-Powered Web3 Assistants
 
-## Project info
+A decentralized platform for creating, managing, and coordinating AI-powered agents with blockchain identity and smart automation capabilities.
 
-**URL**: https://lovable.dev/projects/04ad34fd-882a-48eb-95e5-9f7429cd1f38
+![Flow Platform](https://via.placeholder.com/800x400/3B82F6/FFFFFF?text=Flow+Platform)
 
-## How can I edit this code?
+## 🚀 Overview
 
-There are several ways of editing your application.
+Flow is a cutting-edge Web3 platform that enables users to create intelligent AI agents with unique blockchain identities. These agents can handle payments, manage identity credentials, coordinate community activities, and provide automated blockchain interactions - all while maintaining privacy and security through decentralized architecture.
 
-**Use Lovable**
+## ✨ Key Features
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/04ad34fd-882a-48eb-95e5-9f7429cd1f38) and start prompting.
+### 🤖 AI Agent Types
+- **Payment Agents**: Handle cross-border payments, DeFi integrations, and financial transactions
+- **Identity Agents**: Manage credentials, attestations, and verifiable identity records
+- **Community Agents**: Coordinate DAOs, group messaging, and community activities
+- **AI Assistants**: General-purpose blockchain automation and smart contract interactions
 
-Changes made via Lovable will be committed automatically to this repo.
+### 🔐 Security & Privacy
+- ENS-based identity management
+- Privacy controls and rotating addresses
+- Credential verification and attestation
+- Secure payment processing with configurable limits
 
-**Use your preferred IDE**
+### 🌐 Web3 Integration
+- Multi-wallet support (MetaMask, WalletConnect, Coinbase Wallet)
+- Cross-chain compatibility
+- Smart contract automation
+- Decentralized identity verification
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+## 🏗️ Architecture
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+### Frontend Stack
+- **React 18** with TypeScript for type safety
+- **Vite** for fast development and building
+- **Tailwind CSS** for responsive design
+- **shadcn/ui** for consistent component library
+- **Lucide React** for beautiful icons
 
-Follow these steps:
+### State Management
+- React hooks for local state
+- Context API for theme management
+- React Router for navigation
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+### UI Components
+- Responsive design with mobile-first approach
+- Dark/light mode support
+- Custom gradient themes
+- Smooth animations and transitions
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+## 📱 Pages & Components
 
-# Step 3: Install the necessary dependencies.
-npm i
+### Landing Page
+- Hero section with background image and call-to-action
+- Agent directory with search and filtering
+- Professional footer with company information
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+### Onboarding Flow
+- 5-step guided process for agent creation
+- Wallet connection
+- ENS name selection
+- Role configuration
+- Agent deployment
+
+### Dashboard (Chat Interface)
+- AI chat with suggested prompts
+- Navigation sidebar with collapsible panels
+- Multiple page views (Transactions, Identity, Credentials, Settings)
+- Recent activities panel
+
+### Navigation
+- Fixed header with logo and navigation
+- Responsive design with mobile menu
+- Breadcrumb navigation
+
+## 🚀 Getting Started
+
+### Prerequisites
+- Node.js 18+ and npm
+- Modern web browser with Web3 wallet support
+- Basic understanding of blockchain concepts
+
+### Installation
+
+1. **Clone the repository**
+   ```bash
+   git clone <YOUR_GIT_URL>
+   cd ens-agent-portal
+   ```
+
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
+
+3. **Start development server**
+   ```bash
+   npm run dev
+   ```
+
+4. **Open your browser**
+   Navigate to `http://localhost:5173`
+
+### Build for Production
+```bash
+npm run build
+npm run preview
 ```
 
-**Edit a file directly in GitHub**
+## 🔧 Configuration
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+### Environment Variables
+Create a `.env` file in the root directory:
+```env
+VITE_APP_TITLE=Flow
+VITE_APP_DESCRIPTION=AI-Powered Web3 Assistants
+```
 
-**Use GitHub Codespaces**
+### Tailwind Configuration
+The project uses a custom Tailwind configuration with:
+- Custom color schemes
+- ENS-themed gradients
+- Responsive breakpoints
+- Custom animations
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+## 📁 Project Structure
 
-## What technologies are used for this project?
+```
+src/
+├── components/          # Reusable UI components
+│   ├── ui/             # shadcn/ui components
+│   ├── pages/          # Page-specific components
+│   ├── Navigation.tsx  # Header navigation
+│   ├── HeroSection.tsx # Landing page hero
+│   ├── Footer.tsx      # Site footer
+│   └── ...
+├── pages/              # Main page components
+│   ├── Index.tsx       # Landing page
+│   ├── Chat.tsx        # Dashboard/chat interface
+│   ├── Onboarding.tsx  # Agent creation flow
+│   └── NotFound.tsx    # 404 page
+├── assets/             # Static assets
+├── styles/             # Global styles
+└── main.tsx           # Application entry point
+```
 
-This project is built with:
+## 🎨 Design System
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+### Color Palette
+- **Primary**: Blue gradients (#3B82F6 to #8B5CF6)
+- **Secondary**: Green and purple accents
+- **Background**: Light/dark theme support
+- **Text**: High contrast for accessibility
 
-## How can I deploy this project?
+### Typography
+- **Headings**: Bold, gradient text with custom fonts
+- **Body**: Clean, readable sans-serif
+- **Code**: Monospace for technical content
 
-Simply open [Lovable](https://lovable.dev/projects/04ad34fd-882a-48eb-95e5-9f7429cd1f38) and click on Share -> Publish.
+### Components
+- **Cards**: Elevated with shadows and borders
+- **Buttons**: Multiple variants (hero, outline, ghost)
+- **Forms**: Consistent input styling and validation
+- **Navigation**: Collapsible sidebar with smooth transitions
 
-## Can I connect a custom domain to my Lovable project?
+## 🔌 API Integration
 
-Yes, you can!
+### Web3 Wallets
+- MetaMask integration
+- WalletConnect support
+- Coinbase Wallet compatibility
+- ENS resolution
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+### Blockchain Services
+- Ethereum mainnet support
+- Gas fee estimation
+- Transaction monitoring
+- Smart contract interactions
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+## 🧪 Testing
+
+### Development Testing
+```bash
+# Run type checking
+npm run type-check
+
+# Run linting
+npm run lint
+
+# Run build check
+npm run build
+```
+
+### Browser Testing
+- Tested on Chrome, Firefox, Safari, Edge
+- Mobile responsive design
+- Web3 wallet compatibility
+
+## 🚀 Deployment
+
+### Automated Deployment
+1. Push your changes to the main branch
+2. Your app will be automatically deployed
+3. Check your deployment status in your hosting platform
+
+### Custom Domain
+1. Navigate to Project > Settings > Domains
+2. Click Connect Domain
+3. Follow the DNS configuration steps
+
+### Manual Deployment
+```bash
+npm run build
+# Deploy the dist/ folder to your hosting provider
+```
+
+## 🤝 Contributing
+
+### Development Workflow
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Test thoroughly
+5. Submit a pull request
+
+### Code Standards
+- Use TypeScript for type safety
+- Follow React best practices
+- Maintain consistent formatting
+- Add proper documentation
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🆘 Support
+
+### Documentation
+- [React Documentation](https://react.dev)
+- [TypeScript Documentation](https://www.typescriptlang.org)
+- [Tailwind CSS Documentation](https://tailwindcss.com)
+- [Vite Documentation](https://vitejs.dev)
+
+### Community
+- [GitHub Issues](https://github.com/your-repo/issues)
+- [Discord Community](https://discord.gg/your-community)
+- [Twitter](https://twitter.com/your-handle)
+
+## 🔮 Roadmap
+
+### Phase 1 (Current)
+- ✅ Basic agent creation
+- ✅ Wallet integration
+- ✅ Chat interface
+- ✅ Responsive design
+
+### Phase 2 (Next)
+- 🔄 Advanced agent configuration
+- 🔄 Multi-chain support
+- 🔄 Community features
+- 🔄 Analytics dashboard
+
+### Phase 3 (Future)
+- 📋 AI model training
+- 📋 Cross-platform mobile app
+- 📋 Enterprise features
+- 📋 API marketplace
+
+## 🙏 Acknowledgments
+
+- UI components from [shadcn/ui](https://ui.shadcn.com)
+- Icons from [Lucide](https://lucide.dev)
+- Styling with [Tailwind CSS](https://tailwindcss.com)
+- Built with React, TypeScript, and Vite
+
+---
+
+**Built with ❤️ for the blockchain community**
+
+For more information, visit [Flow Platform](https://your-domain.com) or contact us at [contact@flow.com](mailto:contact@flow.com)
