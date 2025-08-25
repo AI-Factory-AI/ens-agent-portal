@@ -25,8 +25,7 @@ const OnboardingFlow = () => {
     { id: 1, title: "Connect Wallet", description: "Connect your Web3 wallet" },
     { id: 2, title: "Choose ENS Name", description: "Select your agent's ENS subname" },
     { id: 3, title: "Select Agent", description: "Choose which agent to activate" },
-    { id: 4, title: "Configure", description: "Set up your agent preferences" },
-    { id: 5, title: "Deploy", description: "Launch your AI agent" },
+    { id: 4, title: "Deploy", description: "Launch your AI agent" },
   ];
 
   // Check if this is a general activation (from header/hero buttons) or specific agent activation
@@ -208,51 +207,6 @@ const OnboardingFlow = () => {
         );
 
       case 4:
-        return (
-          <Card className="w-full max-w-2xl mx-auto">
-            <CardHeader className="text-center">
-              <Bot className="w-12 h-12 mx-auto mb-4 text-primary" />
-              <CardTitle>Configure Your Agent</CardTitle>
-              <CardDescription>
-                Set up your agent's behavior and permissions.
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              <div className="space-y-4">
-                <h3 className="font-semibold">Payment Settings</h3>
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="space-y-2">
-                    <label className="text-sm font-medium">Max Transaction ($)</label>
-                    <Input type="number" placeholder="100" />
-                  </div>
-                  <div className="space-y-2">
-                    <label className="font-medium">Daily Limit ($)</label>
-                    <Input type="number" placeholder="1000" />
-                  </div>
-                </div>
-              </div>
-              
-              <div className="space-y-4">
-                <h3 className="font-semibold">AI Permissions</h3>
-                <div className="space-y-3">
-                  {[
-                    "Send payments under $20",
-                    "Update ENS records", 
-                    "Join community actions",
-                    "Respond to messages automatically"
-                  ].map((permission, index) => (
-                    <label key={index} className="flex items-center space-x-3 cursor-pointer">
-                      <input type="checkbox" defaultChecked className="rounded" />
-                      <span className="text-sm">{permission}</span>
-                    </label>
-                  ))}
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        );
-
-      case 5:
         return (
           <Card className="w-full max-w-md mx-auto">
             <CardHeader className="text-center">
