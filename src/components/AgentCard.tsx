@@ -1,0 +1,99 @@
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Star, MessageCircle, Wallet, Shield } from "lucide-react";
+
+interface AgentCardProps {
+  name: string;
+  ensName: string;
+  role: string;
+  rating: number;
+  reviews: number;
+  badges: string[];
+  isOnline: boolean;
+  avatar?: string;
+  description?: string;
+}
+
+const AgentCard = ({
+  name,
+  ensName,
+  role,
+  rating,
+  reviews,
+  badges,
+  isOnline,
+  avatar,
+  description
+}: AgentCardProps) => {
+  return (
+    <div className="agent-card group">
+      {/* Agent Header */}
+      <div className="flex items-start justify-between mb-4">
+        <div className="flex items-center space-x-3">
+          <Avatar className="w-12 h-12">
+            <AvatarImage src={avatar} alt={name} />
+            <AvatarFallback className="gradient-ens text-primary-foreground font-semibold">
+              {name.charAt(0).toUpperCase()}
+            </AvatarFallback>
+          </Avatar>
+          <div>
+            <h3 className="font-semibold text-foreground">{name}</h3>
+            <p className="text-sm text-primary font-mono">{ensName}</p>
+          </div>
+        </div>
+        <div className={`flex items-center space-x-1 ${isOnline ? 'text-green-500' : 'text-muted-foreground'}`}>
+          <div className={`w-2 h-2 rounded-full ${isOnline ? 'bg-green-500' : 'bg-muted-foreground'}`}></div>
+          <span className="text-xs">{isOnline ? 'Online' : 'Offline'}</span>
+        </div>
+      </div>
+
+      {/* Role and Rating */}
+      <div className="flex items-center justify-between mb-3">
+        <Badge variant="secondary" className="rounded-full">
+          {role}
+        </Badge>
+        <div className="flex items-center space-x-1">
+          <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+          <span className="text-sm font-medium">{rating}</span>
+          <span className="text-xs text-muted-foreground">({reviews})</span>
+        </div>
+      </div>
+
+      {/* Description */}
+      {description && (
+        <p className="text-sm text-muted-foreground mb-4 line-clamp-2">
+          {description}
+        </p>
+      )}
+
+      {/* Badges */}
+      <div className="flex flex-wrap gap-2 mb-4">
+        {badges.map((badge, index) => (
+          <Badge 
+            key={index} 
+            variant="outline" 
+            className="text-xs border-primary/20 bg-primary/5 text-primary"
+          >
+            <Shield className="w-3 h-3 mr-1" />
+            {badge}
+          </Badge>
+        ))}
+      </div>
+
+      {/* Action Buttons */}
+      <div className="flex space-x-2 mt-auto">
+        <Button variant="outline" size="sm" className="flex-1">
+          <MessageCircle className="w-4 h-4 mr-1" />
+          Chat
+        </Button>
+        <Button variant="ens" size="sm" className="flex-1">
+          <Wallet className="w-4 h-4 mr-1" />
+          Pay
+        </Button>
+      </div>
+    </div>
+  );
+};
+
+export default AgentCard;
